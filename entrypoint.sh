@@ -51,7 +51,7 @@ postIgluError() {
 
     info "msg: ${igluErrors}"
     errorBody="$(head -n -3 <<<$(tail -n +2 <<<${igluErrors}))"
-    info "errorBody: ${errorBody}"
+    #info "errorBody: ${errorBody}"
     regex='[0-9]\.\ error: "([^"]+)".*'
     if [[ $errorBody =~ $regex ]]; then
         # crude way of figuring our offending line
