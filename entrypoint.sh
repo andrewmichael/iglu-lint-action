@@ -40,15 +40,16 @@ postJsonLintError() {
     msg=$1
     info "msg: ${msg}"
 
-    if [[ ${msg} =~ (.+):\ line\ ([0-9]+),\ col\ ([0-9]+),\ (.*)$ ]]; then
-        postComment "${BASH_REMATCH[1]}" "${BASH_REMATCH[4]}" "${BASH_REMATCH[2]}"
-    fi
+#    if [[ ${msg} =~ (.+):\ line\ ([0-9]+),\ col\ ([0-9]+),\ (.*)$ ]]; then
+#        postComment "${BASH_REMATCH[1]}" "${BASH_REMATCH[4]}" "${BASH_REMATCH[2]}"
+#    fi
 }
 
 postIgluError() {
     f=$1
     igluErrors=$2
 
+    info "msg: ${igluErrors}"
     errorBody="$(head -n -3 <<<$(tail -n +2 <<<${igluErrors}))"
     info "errorBody: ${errorBody}"
     regex='[0-9]\.\ error: "([^"]+)".*'
@@ -57,7 +58,7 @@ postIgluError() {
         line="$(awk -v pat="${BASH_REMATCH[1]}" '$0 ~ pat{ print NR; exit }' "${f}")"
         info "line: $line"
     fi
-    postComment "${f}" "${errorBody}" $line
+#   postComment "${f}" "${errorBody}" $line
 }
 
 postComment() {
